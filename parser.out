@@ -1,0 +1,199 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> package_decl import_decl func_decl
+Rule 2     package_decl -> PACKAGE MAIN
+Rule 3     import_decl -> IMPORT STRING
+Rule 4     func_decl -> FUNC MAIN LPAREN RPAREN LBRACE stmt RBRACE
+Rule 5     stmt -> ID DOT PRINTLN LPAREN STRING RPAREN
+
+Terminals, with rules where they appear
+
+DOT                  : 5
+FUNC                 : 4
+ID                   : 5
+IMPORT               : 3
+LBRACE               : 4
+LPAREN               : 4 5
+MAIN                 : 2 4
+PACKAGE              : 2
+PRINTLN              : 5
+RBRACE               : 4
+RPAREN               : 4 5
+STRING               : 3 5
+error                : 
+
+Nonterminals, with rules where they appear
+
+func_decl            : 1
+import_decl          : 1
+package_decl         : 1
+program              : 0
+stmt                 : 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . package_decl import_decl func_decl
+    (2) package_decl -> . PACKAGE MAIN
+
+    PACKAGE         shift and go to state 3
+
+    program                        shift and go to state 1
+    package_decl                   shift and go to state 2
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> package_decl . import_decl func_decl
+    (3) import_decl -> . IMPORT STRING
+
+    IMPORT          shift and go to state 5
+
+    import_decl                    shift and go to state 4
+
+state 3
+
+    (2) package_decl -> PACKAGE . MAIN
+
+    MAIN            shift and go to state 6
+
+
+state 4
+
+    (1) program -> package_decl import_decl . func_decl
+    (4) func_decl -> . FUNC MAIN LPAREN RPAREN LBRACE stmt RBRACE
+
+    FUNC            shift and go to state 8
+
+    func_decl                      shift and go to state 7
+
+state 5
+
+    (3) import_decl -> IMPORT . STRING
+
+    STRING          shift and go to state 9
+
+
+state 6
+
+    (2) package_decl -> PACKAGE MAIN .
+
+    IMPORT          reduce using rule 2 (package_decl -> PACKAGE MAIN .)
+
+
+state 7
+
+    (1) program -> package_decl import_decl func_decl .
+
+    $end            reduce using rule 1 (program -> package_decl import_decl func_decl .)
+
+
+state 8
+
+    (4) func_decl -> FUNC . MAIN LPAREN RPAREN LBRACE stmt RBRACE
+
+    MAIN            shift and go to state 10
+
+
+state 9
+
+    (3) import_decl -> IMPORT STRING .
+
+    FUNC            reduce using rule 3 (import_decl -> IMPORT STRING .)
+
+
+state 10
+
+    (4) func_decl -> FUNC MAIN . LPAREN RPAREN LBRACE stmt RBRACE
+
+    LPAREN          shift and go to state 11
+
+
+state 11
+
+    (4) func_decl -> FUNC MAIN LPAREN . RPAREN LBRACE stmt RBRACE
+
+    RPAREN          shift and go to state 12
+
+
+state 12
+
+    (4) func_decl -> FUNC MAIN LPAREN RPAREN . LBRACE stmt RBRACE
+
+    LBRACE          shift and go to state 13
+
+
+state 13
+
+    (4) func_decl -> FUNC MAIN LPAREN RPAREN LBRACE . stmt RBRACE
+    (5) stmt -> . ID DOT PRINTLN LPAREN STRING RPAREN
+
+    ID              shift and go to state 15
+
+    stmt                           shift and go to state 14
+
+state 14
+
+    (4) func_decl -> FUNC MAIN LPAREN RPAREN LBRACE stmt . RBRACE
+
+    RBRACE          shift and go to state 16
+
+
+state 15
+
+    (5) stmt -> ID . DOT PRINTLN LPAREN STRING RPAREN
+
+    DOT             shift and go to state 17
+
+
+state 16
+
+    (4) func_decl -> FUNC MAIN LPAREN RPAREN LBRACE stmt RBRACE .
+
+    $end            reduce using rule 4 (func_decl -> FUNC MAIN LPAREN RPAREN LBRACE stmt RBRACE .)
+
+
+state 17
+
+    (5) stmt -> ID DOT . PRINTLN LPAREN STRING RPAREN
+
+    PRINTLN         shift and go to state 18
+
+
+state 18
+
+    (5) stmt -> ID DOT PRINTLN . LPAREN STRING RPAREN
+
+    LPAREN          shift and go to state 19
+
+
+state 19
+
+    (5) stmt -> ID DOT PRINTLN LPAREN . STRING RPAREN
+
+    STRING          shift and go to state 20
+
+
+state 20
+
+    (5) stmt -> ID DOT PRINTLN LPAREN STRING . RPAREN
+
+    RPAREN          shift and go to state 21
+
+
+state 21
+
+    (5) stmt -> ID DOT PRINTLN LPAREN STRING RPAREN .
+
+    RBRACE          reduce using rule 5 (stmt -> ID DOT PRINTLN LPAREN STRING RPAREN .)
+
